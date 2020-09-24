@@ -10,7 +10,7 @@ plugins {
 group = "com.github.smallshen"
 version = "2.5.2"
 
-val ps = loadProperties("${projectDir}/private.properties")
+var ps :org.jetbrains.kotlin.konan.properties.Properties? = null
 
 repositories {
     mavenCentral()
@@ -32,12 +32,21 @@ tasks.withType<Jar> {
     }
 }
 
+
+val sourcesJar by tasks.registering(Jar::class) {
+    dependsOn(JavaPlugin.CLASSES_TASK_NAME)
+    archiveClassifier.set("sources")
+    from(sourceSets["main"].allSource)
+}
+
 publishing {
+    ps = loadProperties("${projectDir}/private.properties")
     publications {
         create<MavenPublication>("maven") {
             groupId = "io.xiaoshen"
             artifactId = "miraibotconsole"
             version = version
+            artifact(tasks["sourcesJar"])
             from(components["java"])
 
         }
@@ -46,13 +55,15 @@ publishing {
         maven {
             url = uri("https://maven.pkg.jetbrains.space/wmstudio/p/miraibotconsole/maven")
             credentials {
-                username = "${ps["username"]}"
-                password = "${ps["password"]}"
+                username = "${ps!!["username"]}"
+                password = "${ps!!["password"]}"
             }
         }
     }
 }
 
+
+
 artifacts {
-    add("archives", tasks.getByName("kotlinSourcesJar"))
+    archives(sourcesJar)
 }

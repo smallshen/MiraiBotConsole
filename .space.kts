@@ -1,3 +1,3 @@
-job("Build and run tests") {
-   gradlew("openjdk:8", "clean")
+job("gradle shadowJar") {
+   gradlew("openjdk:8", "clean shadowJar")
 }
