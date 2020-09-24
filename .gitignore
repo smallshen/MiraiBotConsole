@@ -1,0 +1,6 @@
+../../Desktop/MiraiBotConsole/.gradle/
+.idea/
+build/
+run/
+
+private.properties
