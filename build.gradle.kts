@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.smallshen"
-version = "2.5.1"
+version = "2.5.2"
 
 val ps = loadProperties("${projectDir}/private.properties")
 
@@ -54,5 +54,5 @@ publishing {
 }
 
 artifacts {
-    add("archives", tasks.getByName("sourceJar"))
+    add("archives", tasks.getByName("kotlinSourcesJar"))
 }
