@@ -39,6 +39,7 @@ publishing {
             artifactId = "miraibotconsole"
             version = version
             from(components["java"])
+
         }
     }
     repositories {
@@ -50,4 +51,8 @@ publishing {
             }
         }
     }
+}
+
+artifacts {
+    add("archives", tasks.getByName("sourceJar"))
 }
