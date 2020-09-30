@@ -2,10 +2,12 @@ package com.github.smallshen.miraibot.xiaoshen.command
 
 import com.github.smallshen.miraibot.BotConsole
 import net.mamoe.mirai.Bot
+import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.contact.Member
 import net.mamoe.mirai.contact.isAdministrator
 import net.mamoe.mirai.contact.isOwner
 import net.mamoe.mirai.message.GroupMessageEvent
+import net.mamoe.mirai.message.MessageReceipt
 import net.mamoe.mirai.message.data.*
 
 typealias ExecutorBlock<T> = suspend GroupCommandExecutor<T>.() -> Unit
@@ -111,8 +113,12 @@ class GroupCommandExecutor<E : Member>(val sender: E, val args: MessageChain, va
         e.reply(message)
     }
 
-    suspend infix fun reply(message: MessageChain) {
+    suspend fun reply(message: MessageChain) {
         e.reply(message)
+    }
+
+    suspend infix fun reply(message: MessageChainBuilder): MessageReceipt<Contact> {
+        return e.reply(message.asMessageChain())
     }
 
     suspend fun reply(message: SingleMessage) {

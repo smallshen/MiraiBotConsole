@@ -2,6 +2,8 @@ package com.github.smallshen.miraibot
 
 
 import com.github.smallshen.miraibot.plugin.BotPlugin
+import com.github.smallshen.miraibot.util.message
+import com.github.smallshen.miraibot.xiaoshen.command.groupCommand
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.contact.nameCardOrNick

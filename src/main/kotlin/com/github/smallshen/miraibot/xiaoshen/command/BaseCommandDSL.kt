@@ -7,6 +7,7 @@ import net.mamoe.mirai.contact.User
 import net.mamoe.mirai.message.MessageEvent
 import net.mamoe.mirai.message.MessageReceipt
 import net.mamoe.mirai.message.data.MessageChain
+import net.mamoe.mirai.message.data.MessageChainBuilder
 import net.mamoe.mirai.message.data.SingleMessage
 import net.mamoe.mirai.message.data.content
 
@@ -67,8 +68,13 @@ class Executor<E : User>(val sender: E, val args: MessageChain, val e: MessageEv
         e.reply(message)
     }
 
-    suspend infix fun reply(message: MessageChain): MessageReceipt<Contact> {
-        return e.reply(message)
+    suspend fun reply(message: MessageChain) {
+        e.reply(message)
+    }
+
+
+    suspend infix fun reply(message: MessageChainBuilder): MessageReceipt<Contact> {
+        return e.reply(message.asMessageChain())
     }
 
     suspend fun reply(message: SingleMessage) {
