@@ -111,7 +111,7 @@ class GroupCommandExecutor<E : Member>(val sender: E, val args: MessageChain, va
         e.reply(message)
     }
 
-    suspend fun reply(message: MessageChain) {
+    suspend infix fun reply(message: MessageChain) {
         e.reply(message)
     }
 
