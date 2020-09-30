@@ -1,9 +1,9 @@
-package com.github.smallshen.miraibot.xiaoshen.command
+package com.github.smallshen.miraibot.util.chinese.command
 
 import com.github.smallshen.miraibot.BotConsole
-import net.mamoe.mirai.contact.Member
+import com.github.smallshen.miraibot.xiaoshen.command.CommandHandler
+import com.github.smallshen.miraibot.xiaoshen.command.onAnywhereCommand
 import net.mamoe.mirai.contact.User
-import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.MessageEvent
 import net.mamoe.mirai.message.data.MessageChain
 import net.mamoe.mirai.message.data.SingleMessage

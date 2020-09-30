@@ -1,7 +1,7 @@
 package com.github.smallshen.miraibot.xiaoshen.command
 
 import com.github.smallshen.miraibot.BotConsole
-import net.mamoe.mirai.Bot
+import com.github.smallshen.miraibot.util.MessageBuilderDSL
 import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.contact.Member
 import net.mamoe.mirai.contact.isAdministrator
@@ -72,8 +72,8 @@ open class GroupCommandDSL(
 
 }
 
-fun groupCommand(command: String,  groupCommand: GroupCommandDSL.() -> Unit) =
-    GroupCommandDSL(command = command, ).apply(groupCommand)
+fun groupCommand(command: String, groupCommand: GroupCommandDSL.() -> Unit) =
+    GroupCommandDSL(command = command).apply(groupCommand)
 
 
 fun modifyCommand(dsl: GroupCommandDSL, modification: GroupCommandDSL.() -> Unit) = dsl.apply(modification)
@@ -107,6 +107,13 @@ class GroupCommandExecutor<E : Member>(val sender: E, val args: MessageChain, va
 
             else -> null
         }
+    }
+
+
+    suspend fun reply(message: suspend MessageBuilderDSL.() -> Unit) {
+        reply(MessageBuilderDSL().apply {
+            message.invoke(this)
+        })
     }
 
     suspend fun reply(message: String) {

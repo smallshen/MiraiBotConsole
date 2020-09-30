@@ -1,6 +1,9 @@
-package com.github.smallshen.miraibot.xiaoshen.command
+package com.github.smallshen.miraibot.util.chinese.command
 
 import com.github.smallshen.miraibot.BotConsole
+import com.github.smallshen.miraibot.xiaoshen.command.GroupCommandHandler
+import com.github.smallshen.miraibot.xiaoshen.command.onGroupCommand
+import com.github.smallshen.miraibot.xiaoshen.command.onSpecificGroupCommand
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.contact.Member
 import net.mamoe.mirai.contact.isAdministrator

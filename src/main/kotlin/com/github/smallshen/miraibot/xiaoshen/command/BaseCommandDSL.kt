@@ -2,6 +2,7 @@ package com.github.smallshen.miraibot.xiaoshen.command
 
 
 import com.github.smallshen.miraibot.BotConsole
+import com.github.smallshen.miraibot.util.MessageBuilderDSL
 import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.contact.User
 import net.mamoe.mirai.message.MessageEvent
@@ -72,6 +73,12 @@ class Executor<E : User>(val sender: E, val args: MessageChain, val e: MessageEv
         e.reply(message)
     }
 
+
+    suspend fun reply(message: suspend MessageBuilderDSL.() -> Unit) {
+        reply(MessageBuilderDSL().apply {
+            message.invoke(this)
+        })
+    }
 
     suspend infix fun reply(message: MessageChainBuilder): MessageReceipt<Contact> {
         return e.reply(message.asMessageChain())
