@@ -30,13 +30,13 @@ class MessageBuilderDSL(
     }
 
 
-    fun img(block: ImageDSL.() -> Unit): Image {
+    fun img(client: HttpClient = HttpClient(), block: ImageDSL.() -> Unit): Image {
         val i = ImageDSL().apply(block)
 
         var f: Image?
 
         runBlocking {
-            f = group!!.uploadImage(HttpClient().getImg(i.url))
+            f = group!!.uploadImage(client.getImg(i.url))
             add(f!!)
         }
 
