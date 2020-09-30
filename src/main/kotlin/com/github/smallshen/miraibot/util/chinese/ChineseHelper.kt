@@ -34,7 +34,7 @@ infix fun 判断执行块.否则(执行: 判断执行块.() -> Unit) {
 }
 
 infix fun 判断执行块.否则(执行: 判断执行块): 判断执行块 {
-    return this
+    return 执行
 }
 
 fun 当(value: Any?, 执行块: 当判断.() -> Unit): 当判断 {
@@ -60,9 +60,11 @@ class 当判断(val 值: Any?) {
     }
 }
 
-inline fun <T> Iterable<T>.便利(action: (T) -> Unit): Unit {
+inline fun <T> Iterable<T>.遍历(action: (T) -> Unit): Unit {
     for (element in this) action(element)
 }
+
+public fun <T> 组(vararg 元素: T): List<T> = if (元素.size > 0) 元素.asList() else emptyList()
 
 public fun <T> Iterable<T>.移除(数量: Int): List<T> {
     require(数量 >= 0) { "Requested element count $数量 is less than zero." }

@@ -48,6 +48,11 @@ object BotConsole {
 
 
 suspend fun main(args: Array<String>) {
+    loadInConsole()
+}
+
+
+suspend fun loadInConsole() {
     HyLoggerConfig.colorCompatibility = ColorCompatibility.DISABLED
     val logger: HyLogger = BotConsole.logger
     val configFile = ConsoleConfig()
@@ -166,8 +171,6 @@ suspend fun main(args: Array<String>) {
 
 
     logger.warning("退出机器人...")
-
-
 }
 
 fun getPluginJars(): List<File> {

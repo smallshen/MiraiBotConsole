@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.smallshen"
-version = "2.5.2"
+version = "2.6.0"
 
 var ps :org.jetbrains.kotlin.konan.properties.Properties? = null
 
@@ -22,7 +22,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.github.HyDevelop:HyConfigLib:3.1.52")
-    implementation("net.mamoe:mirai-core-qqandroid:1.3.0")
+    implementation("net.mamoe:mirai-core-qqandroid:1.3.1")
     implementation("org.hydev:HyLogger:2.1.0.378")
 }
 
