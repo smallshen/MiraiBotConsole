@@ -1,9 +1,11 @@
 package com.github.smallshen.miraibot.util
 
+import com.github.smallshen.miraibot.xiaoshen.command.GroupCommandExecutor
 import io.ktor.client.*
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.contact.Group
 import net.mamoe.mirai.contact.Member
+import net.mamoe.mirai.event.events.GroupEvent
 import net.mamoe.mirai.message.GroupMessageEvent
 import net.mamoe.mirai.message.data.At
 import net.mamoe.mirai.message.data.Image
@@ -87,6 +89,12 @@ class MessageBuilderDSL(
 
 
 fun message(buildAction: MessageBuilderDSL.() -> Unit) = MessageBuilderDSL().apply(buildAction)
+
+fun GroupEvent.message(buildAction: MessageBuilderDSL.() -> Unit) = MessageBuilderDSL(group = this.group).apply(buildAction)
+
+fun GroupCommandExecutor<Member>.message(buildAction: MessageBuilderDSL.() -> Unit) =
+    MessageBuilderDSL(groupMessageEvent = this.e).apply(buildAction)
+
 
 sealed class MessageDSL
 
