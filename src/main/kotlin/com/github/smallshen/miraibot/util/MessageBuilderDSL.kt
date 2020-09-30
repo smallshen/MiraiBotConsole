@@ -77,11 +77,8 @@ class MessageBuilderDSL(
         return at
     }
 
-    fun newLine(): PlainText {
-        with(PlainText("\n")) {
-            add(this)
-            return this
-        }
+    fun newLine() {
+        add(PlainText("\n"))
     }
 
 
@@ -90,7 +87,8 @@ class MessageBuilderDSL(
 
 fun message(buildAction: MessageBuilderDSL.() -> Unit) = MessageBuilderDSL().apply(buildAction)
 
-fun GroupEvent.message(buildAction: MessageBuilderDSL.() -> Unit) = MessageBuilderDSL(group = this.group).apply(buildAction)
+fun GroupEvent.message(buildAction: MessageBuilderDSL.() -> Unit) =
+    MessageBuilderDSL(group = this.group).apply(buildAction)
 
 fun GroupCommandExecutor<Member>.message(buildAction: MessageBuilderDSL.() -> Unit) =
     MessageBuilderDSL(groupMessageEvent = this.e).apply(buildAction)
@@ -100,16 +98,16 @@ sealed class MessageDSL
 
 data class ImageDSL(var url: String = "") : MessageDSL()
 data class PlainTextDSL(var content: String = "") : MessageDSL() {
-    operator fun plus(s: Int): Unit {
-        content + s
+    operator fun plus(s: Any?): Unit {
+        content += s
     }
 
-    operator fun String.unaryPlus(): Unit {
-        content + this
+    operator fun String.unaryPlus() {
+        content += this
     }
 
     fun newLine() {
-        this.content += "\n"
+        content += "\n"
     }
 }
 
