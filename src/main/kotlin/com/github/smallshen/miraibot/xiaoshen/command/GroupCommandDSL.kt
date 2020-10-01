@@ -111,7 +111,7 @@ class GroupCommandExecutor<E : Member>(val sender: E, val args: MessageChain, va
 
 
     suspend fun reply(message: MessageBuilderDSL.() -> Unit) {
-        val a = MessageBuilderDSL().apply(message)
+        val a = MessageBuilderDSL(groupMessageEvent = e).apply(message)
         reply(a)
     }
 
