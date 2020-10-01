@@ -7,10 +7,7 @@ import net.mamoe.mirai.contact.Contact
 import net.mamoe.mirai.contact.User
 import net.mamoe.mirai.message.MessageEvent
 import net.mamoe.mirai.message.MessageReceipt
-import net.mamoe.mirai.message.data.MessageChain
-import net.mamoe.mirai.message.data.MessageChainBuilder
-import net.mamoe.mirai.message.data.SingleMessage
-import net.mamoe.mirai.message.data.content
+import net.mamoe.mirai.message.data.*
 
 typealias CommandExecutorBlock<T> = suspend Executor<T>.() -> Unit
 
@@ -74,10 +71,9 @@ class Executor<E : User>(val sender: E, val args: MessageChain, val e: MessageEv
     }
 
 
-    suspend fun reply(message: suspend MessageBuilderDSL.() -> Unit) {
-        reply(MessageBuilderDSL().apply {
-            message.invoke(this)
-        })
+    suspend fun reply(message: MessageBuilderDSL.() -> Unit) {
+        val a = MessageBuilderDSL().apply(message)
+        reply(a)
     }
 
     suspend infix fun reply(message: MessageChainBuilder): MessageReceipt<Contact> {
