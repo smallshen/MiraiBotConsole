@@ -8,7 +8,8 @@ abstract class BotPlugin(
     val pluginName: String,
     val pluginVersion: String,
     val pluginAuthor: List<String>? = null,
-    val defaultConfig: PluginConfig? = null
+    val defaultConfig: PluginConfig? = null,
+    val acceptBots: (Bot) -> (Boolean) = { true }
 ) {
 
 

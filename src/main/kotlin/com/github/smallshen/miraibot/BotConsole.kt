@@ -1,6 +1,7 @@
 package com.github.smallshen.miraibot
 
 
+import com.github.smallshen.miraibot.console.ConsoleCommandProcessor
 import com.github.smallshen.miraibot.plugin.BotPlugin
 import com.github.smallshen.miraibot.util.message
 import com.github.smallshen.miraibot.xiaoshen.command.groupCommand
@@ -209,6 +210,31 @@ fun startConsoleListener() {
                     }
                     break
                 }
+
+                else -> {
+                    runBlocking {
+                        ConsoleCommandProcessor.registeredConsoleCommands.forEach {
+                            if (string.startsWith(it.first + " ", true) or string.equals(it.first, true)) {
+                                it.second.onConsoleCommand(
+                                    string,
+                                    if (string.startsWith(it.first + " ", true)) {
+                                        string.replaceFirst(it.first + " ", "", ignoreCase = false)
+                                    } else if (string.equals(it.first, true)) {
+                                        ""
+                                    } else {
+                                        return@forEach
+                                    }, if (string.startsWith(it.first + " ", true)) {
+                                        string.replaceFirst(it.first + " ", "", ignoreCase = false).split(" ")
+                                    } else if (string.equals(it.first, true)) {
+                                        listOf()
+                                    } else {
+                                        return@forEach
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -268,5 +294,11 @@ fun basicEvents(bot: Bot) {
             }
         }
     }
-
 }
+
+
+fun allowBot(bot: Bot): Boolean {
+    return bot.id == 0L
+}
+
+class testPlugin : BotPlugin("", "", listOf(), acceptBots = ::allowBot)
