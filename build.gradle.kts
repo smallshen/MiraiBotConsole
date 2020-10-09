@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.smallshen"
-version = "2.7.6"
+version = "2.8.0"
 
 var ps :org.jetbrains.kotlin.konan.properties.Properties? = null
 
