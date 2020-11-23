@@ -8,8 +8,7 @@ abstract class BotPlugin(
     val pluginName: String,
     val pluginVersion: String,
     val pluginAuthor: List<String>? = null,
-    val defaultConfig: PluginConfig? = null,
-    val acceptBots: (Bot) -> (Boolean) = { true }
+    val defaultConfig: PluginConfig? = null
 ) {
 
 
@@ -29,6 +28,8 @@ abstract class BotPlugin(
     open suspend fun onPluginDisable() {
 
     }
+
+    operator fun get(fileName: String) = getConfig(fileName)
 
     fun getConfig(fileName: String): PluginConfig {
         return PluginConfig("${pluginDir.absolutePath}/${fileName}").apply {

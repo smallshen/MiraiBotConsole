@@ -1,7 +1,5 @@
 package com.github.smallshen.miraibot.console
 
-import net.mamoe.mirai.Bot
-
 object ConsoleCommandProcessor {
     var registeredConsoleCommands = mutableListOf<Pair<String, ConsoleCommandHandler>>()
 }

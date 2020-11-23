@@ -2,13 +2,13 @@ import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
     kotlin("jvm") version "1.4.10"
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
     `maven-publish`
     maven
 }
 
 group = "com.github.smallshen"
-version = "2.8.0"
+version = "3.0.0-b1"
 
 var ps :org.jetbrains.kotlin.konan.properties.Properties? = null
 
@@ -16,21 +16,26 @@ repositories {
     mavenCentral()
     maven("https://jitpack.io")
     jcenter()
+    maven("https://maven.pkg.jetbrains.space/wmstudio/p/miraibotconsole/maven")
 }
 
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("com.github.HyDevelop:HyConfigLib:3.1.52")
-    implementation("net.mamoe:mirai-core-qqandroid:1.3.1")
+    implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
     implementation("org.hydev:HyLogger:2.1.0.378")
+    implementation("io.xiaoshen:commandbuilder:0.0.2")
 }
+
 
 tasks.withType<Jar> {
     manifest {
         attributes(Pair("Main-Class", "com.github.smallshen.miraibot.BotConsoleKt"))
     }
+
 }
+
 
 
 val sourcesJar by tasks.registering(Jar::class) {
@@ -50,6 +55,8 @@ publishing {
             from(components["java"])
 
         }
+
+
     }
     repositories {
         maven {

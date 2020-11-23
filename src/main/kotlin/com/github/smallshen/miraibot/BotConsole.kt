@@ -3,8 +3,6 @@ package com.github.smallshen.miraibot
 
 import com.github.smallshen.miraibot.console.ConsoleCommandProcessor
 import com.github.smallshen.miraibot.plugin.BotPlugin
-import com.github.smallshen.miraibot.util.message
-import com.github.smallshen.miraibot.xiaoshen.command.groupCommand
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.Bot
 import net.mamoe.mirai.contact.nameCardOrNick
@@ -88,6 +86,7 @@ suspend fun loadInConsole() {
     try {
         BotConsole.bot.login()
     } catch (e: LoginFailedException) {
+        e.printStackTrace()
         logger.warning("登录失败，请检查密码")
         return
     }
@@ -295,10 +294,3 @@ fun basicEvents(bot: Bot) {
         }
     }
 }
-
-
-fun allowBot(bot: Bot): Boolean {
-    return bot.id == 0L
-}
-
-class testPlugin : BotPlugin("", "", listOf(), acceptBots = ::allowBot)
