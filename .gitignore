@@ -1,6 +1,6 @@
 .idea/
-build/
-run/
-.gradle/
+/build/
+/run/
+/.gradle/
 
 private.properties
