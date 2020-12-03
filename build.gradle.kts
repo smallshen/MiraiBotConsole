@@ -1,16 +1,16 @@
 import org.jetbrains.kotlin.konan.properties.loadProperties
 
 plugins {
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.4.20"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     `maven-publish`
     maven
 }
 
 group = "com.github.smallshen"
-version = "3.0.0-b1"
+version = "3.0.2"
 
-var ps :org.jetbrains.kotlin.konan.properties.Properties? = null
+var ps: org.jetbrains.kotlin.konan.properties.Properties? = null
 
 repositories {
     mavenCentral()
@@ -25,17 +25,16 @@ dependencies {
     implementation("com.github.HyDevelop:HyConfigLib:3.1.52")
     implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
     implementation("org.hydev:HyLogger:2.1.0.378")
-    implementation("io.xiaoshen:commandbuilder:0.0.2")
+    implementation("io.xiaoshen:commandbuilder:0.0.7")
 }
 
 
 tasks.withType<Jar> {
     manifest {
-        attributes(Pair("Main-Class", "com.github.smallshen.miraibot.BotConsoleKt"))
+        attributes("Main-Class" to "com.github.smallshen.miraibot.BotConsoleKt")
     }
 
 }
-
 
 
 val sourcesJar by tasks.registering(Jar::class) {
