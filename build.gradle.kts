@@ -62,9 +62,11 @@ publishing {
         maven {
             url = uri("https://maven.pkg.jetbrains.space/wmstudio/p/miraibotconsole/maven")
             credentials {
-                ps = loadProperties("${projectDir}/private.properties")
-                username = "${ps!!["username"]}"
-                password = "${ps!!["password"]}"
+                kotlin.runCatching {
+                    ps = loadProperties("${projectDir}/private.properties")
+                }
+                username = "${ps?.get("username")}"
+                password = "${ps?.get("password")}"
             }
         }
     }
