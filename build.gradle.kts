@@ -17,6 +17,7 @@ repositories {
     maven("https://jitpack.io")
     jcenter()
     maven("https://maven.pkg.jetbrains.space/wmstudio/p/miraibotconsole/maven")
+    maven("https://dl.bintray.com/s1m0nw1/KtsRunner")
 }
 
 
@@ -25,7 +26,8 @@ dependencies {
     implementation("com.github.HyDevelop:HyConfigLib:3.1.52")
     implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
     implementation("org.hydev:HyLogger:2.1.0.378")
-    implementation("io.xiaoshen:commandbuilder:0.0.7")
+    implementation("io.xiaoshen:commandbuilder:0.0.8")
+    implementation("de.swirtz:ktsRunner:0.0.9")
 }
 
 
@@ -73,3 +75,11 @@ publishing {
 artifacts {
     archives(sourcesJar)
 }
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+

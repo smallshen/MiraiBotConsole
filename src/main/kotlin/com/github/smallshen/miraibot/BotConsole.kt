@@ -3,6 +3,7 @@ package com.github.smallshen.miraibot
 
 import com.github.smallshen.miraibot.console.ConsoleCommandProcessor
 import com.github.smallshen.miraibot.plugin.BotPlugin
+import com.github.smallshen.miraibot.script.loadScripts
 import io.xiaoshen.commandbuilder.extension.loginAlsoSetToGlobal
 import kotlinx.coroutines.runBlocking
 import net.mamoe.mirai.Bot
@@ -166,6 +167,10 @@ suspend fun loadInConsole() {
     }
 
     logger.log("插件加载完成")
+    logger.log("开始加载脚本")
+    loadScripts(logger)
+
+    logger.log("加载完成")
 
     basicEvents(bot = BotConsole.bot)
 
