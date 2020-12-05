@@ -9,7 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 1.8
@@ -17,7 +16,7 @@ jobs:
         with:
           java-version: 1.8
       - name: 构建
-        run: ./gradlew clean shadowJar
+        run: gradle clean shadowJar
       - name: 文件
         uses: actions/upload-artifact@v2
         with:
