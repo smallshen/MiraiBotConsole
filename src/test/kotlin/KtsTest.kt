@@ -1,7 +1,5 @@
 import de.swirtz.ktsrunner.objectloader.KtsObjectLoader
-import de.swirtz.ktsrunner.objectloader.LoadException
 import java.io.File
-import java.lang.RuntimeException
 
 fun KtsObjectLoader.loadNoCast(script: String) = engine.eval(script)
 

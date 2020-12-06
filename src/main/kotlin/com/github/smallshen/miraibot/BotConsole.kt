@@ -2,6 +2,7 @@ package com.github.smallshen.miraibot
 
 
 import com.github.smallshen.miraibot.console.ConsoleCommandProcessor
+import com.github.smallshen.miraibot.console.registerDefaultConsoleCommand
 import com.github.smallshen.miraibot.plugin.BotPlugin
 import com.github.smallshen.miraibot.script.loadScripts
 import io.xiaoshen.commandbuilder.extension.loginAlsoSetToGlobal
@@ -58,6 +59,7 @@ suspend fun main(args: Array<String>) {
 suspend fun loadInConsole() {
     HyLoggerConfig.colorCompatibility = ColorCompatibility.DISABLED
     val logger: HyLogger = BotConsole.logger
+    loadLibs(logger)
     val configFile = ConsoleConfig()
     if (!configFile.configFile.exists()) {
         logger.warning("没有检测到配置文件，创建中")
@@ -205,6 +207,7 @@ fun getPlugin(file: File): BotPlugin {
 }
 
 fun startConsoleListener() {
+    registerDefaultConsoleCommand()
     while (true) {
         val string = readLine()
         if (string != null) {
@@ -248,54 +251,54 @@ fun startConsoleListener() {
 }
 
 fun basicEvents(bot: Bot) {
+    val friendLogger = HyLogger("${AnsiColor.GREEN}好友消息")
     bot.subscribeAlways<FriendMessageEvent> {
-        HyLogger("${AnsiColor.GREEN}好友消息")
-            .log("<${sender.id}> [${sender.nick}] ${message.contentToString()}")
+        friendLogger.log("<${sender.id}> [${sender.nick}] ${message.contentToString()}")
     }
 
+    val groupLogger = HyLogger("${AnsiColor.YELLOW}群组消息")
     bot.subscribeAlways<GroupMessageEvent> {
-        HyLogger("${AnsiColor.YELLOW}群组消息")
-            .log("<${group.id}> [${sender.nameCardOrNick}] ${message.contentToString()}")
+        groupLogger.log("<${group.id}> [${sender.nameCardOrNick}] ${message.contentToString()}")
     }
 
+    val tempLogger = HyLogger("${AnsiColor.CYAN}临时消息")
     bot.subscribeAlways<TempMessageEvent> {
-        HyLogger("${AnsiColor.CYAN}临时消息")
-            .log("<${sender.id}> [${sender.nameCardOrNick}] ${message.contentToString()}")
+        tempLogger.log("<${sender.id}> [${sender.nameCardOrNick}] ${message.contentToString()}")
     }
 
     bot.subscribeAlways<MemberJoinEvent> {
-        HyLogger("${AnsiColor.YELLOW}群组消息").log("用户${this.member.id} 加入了群组")
+        groupLogger.log("用户${this.member.id} 加入了群组")
     }
 
     bot.subscribeAlways<MemberLeaveEvent> {
-        HyLogger("${AnsiColor.YELLOW}群组消息").log("用户${this.member.id} 离开了群组")
+        groupLogger.log("用户${this.member.id} 离开了群组")
     }
 
+    val tempSendLogger = HyLogger("${AnsiColor.CYAN}发送临时消息")
     bot.subscribeAlways<TempMessagePostSendEvent> {
-        HyLogger("${AnsiColor.CYAN}发送临时消息")
-            .log("<${this.target.id}> [${this.target.nameCard}] ${message.contentToString()}")
+        tempSendLogger.log("<${this.target.id}> [${this.target.nameCard}] ${message.contentToString()}")
     }
 
+    val friendSendLogger = HyLogger("${AnsiColor.CYAN}发送好友消息")
     bot.subscribeAlways<FriendMessagePostSendEvent> {
-        HyLogger("${AnsiColor.CYAN}发送好友消息")
-            .log("<${this.target.id}> [${this.target.nick}] ${message.contentToString()}")
+        friendSendLogger.log("<${this.target.id}> [${this.target.nick}] ${message.contentToString()}")
     }
 
+    val groupSendLogger = HyLogger("${AnsiColor.CYAN}发送群组消息")
     bot.subscribeAlways<GroupMessagePostSendEvent> {
-        HyLogger("${AnsiColor.CYAN}发送群组消息")
-            .log("<${this.target.id}> [${bot.nick}] ${message.contentToString()}")
+        groupSendLogger.log("<${this.target.id}> [${bot.nick}] ${message.contentToString()}")
     }
 
+    val fastImage = HyLogger("闪照提醒")
     bot.subscribeAlways<MessageEvent> {
-        val logger = HyLogger("闪照提醒")
         this.message.forEach {
             if (it is FlashImage) {
-                logger.warning("发现闪照, 地址 ${it.image.queryUrl()}")
+                fastImage.warning("发现闪照, 地址 ${it.image.queryUrl()}")
                 File("FlashImages/${it.image.imageId}.jpg").apply {
                     createNewFile()
                     writeBytes(URL(it.image.queryUrl()).readBytes())
                 }
-                logger.log("下载 ${it.image.queryUrl()} 完成")
+                fastImage.log("下载 ${it.image.queryUrl()} 完成")
             }
         }
     }
