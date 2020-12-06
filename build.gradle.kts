@@ -26,7 +26,7 @@ dependencies {
     implementation("com.github.HyDevelop:HyConfigLib:3.1.52")
     implementation("net.mamoe:mirai-core-qqandroid:1.3.3")
     implementation("org.hydev:HyLogger:2.1.0.378")
-    implementation("io.xiaoshen:commandbuilder:0.0.8")
+    implementation("io.xiaoshen:commandbuilder:0.0.9")
     implementation("de.swirtz:ktsRunner:0.0.9")
 }
 
