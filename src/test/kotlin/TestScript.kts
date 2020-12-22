@@ -1,4 +1,5 @@
 import io.xiaoshen.commandbuilder.command.dsl.invoke
+import net.mamoe.mirai.message.recallIn
 
 /**
  * @see com.github.smallshen.miraibot.script.loadScripts
@@ -6,43 +7,9 @@ import io.xiaoshen.commandbuilder.command.dsl.invoke
 
 
 "!" {
-    "test" {
-        "a" {
-            reply {
-                +"a"
-            }
-        }
-
-        "b" {
-            reply {
-                +"b"
-            }
-        }
-
-    }
-
-
-    groups {
-        "gcommand" {
-            reply {
-                +"group only Command"
-            }
-        }
-
-        123 {
-            "spgcommand" {
-                reply {
-                    +"specific group only command"
-                }
-            }
-        }
-    }
-
-    friends {
-        "f" {
-            reply {
-                +"friends only command"
-            }
+    "uwu" {
+        reply {
+            +"uwu"
         }
     }
 }

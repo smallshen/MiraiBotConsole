@@ -28,10 +28,13 @@ import java.io.File
 import java.net.URL
 import java.net.URLClassLoader
 import java.util.jar.JarFile
+import javax.script.ScriptEngine
 
 /**
  * @author xiaoshen
  */
+
+lateinit var engine: ScriptEngine
 
 object BotConsole {
     lateinit var bot: Bot
@@ -51,13 +54,15 @@ object BotConsole {
 }
 
 
-suspend fun main(args: Array<String>) {
-    loadInConsole()
+fun main(args: Array<String>) {
+    runBlocking {
+        loadInConsole()
+    }
 }
 
 
 suspend fun loadInConsole() {
-    HyLoggerConfig.colorCompatibility = ColorCompatibility.DISABLED
+//    HyLoggerConfig.colorCompatibility = ColorCompatibility.DISABLED
     val logger: HyLogger = BotConsole.logger
     loadLibs(logger)
     val configFile = ConsoleConfig()
@@ -105,6 +110,10 @@ suspend fun loadInConsole() {
     if (!quickImageFolder.exists()) {
         quickImageFolder.mkdir()
     }
+
+    logger.log("开始加载脚本")
+    loadScripts()
+    logger.log("加载完成")
 
 
     logger.log("开始加载插件")
@@ -169,10 +178,6 @@ suspend fun loadInConsole() {
     }
 
     logger.log("插件加载完成")
-    logger.log("开始加载脚本")
-    loadScripts(logger)
-
-    logger.log("加载完成")
 
     basicEvents(bot = BotConsole.bot)
 

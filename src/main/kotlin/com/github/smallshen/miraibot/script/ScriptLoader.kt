@@ -1,27 +1,32 @@
 package com.github.smallshen.miraibot.script
 
-import com.github.smallshen.miraibot.loadLibs
-import de.swirtz.ktsrunner.objectloader.KtsObjectLoader
-import de.swirtz.ktsrunner.objectloader.LoadException
 import io.xiaoshen.commandbuilder.command.dsl.PrefixCommandScope
 import org.hydev.logger.HyLogger
 import java.io.File
+import javax.script.ScriptEngineManager
+
 
 val loadedScripts = mutableListOf<PrefixCommandScope>()
+val scriptLogger = HyLogger("脚本加载器")
+val engine = ScriptEngineManager().getEngineByExtension("kts")
 
-fun loadScripts(logger: HyLogger) {
-    val loader = KtsObjectLoader()
+fun loadScripts() {
     File("scripts").apply { if (!exists()) mkdir() }
         .listFiles()!!
         .filter { it.canonicalPath.endsWith(".kts") }
         .forEach {
-            println(it.readText())
-            logger.log("开始加载 ${it.canonicalPath}")
-            loadedScripts.add(loader.load(it.readText()))
+            loadedScripts.add(engine.eval(it.readText()) as PrefixCommandScope)
+            scriptLogger.log("成功加载脚本 ${it.canonicalPath}")
         }
 }
 
-fun KtsObjectLoader.loadNoCast(script: String) {
-    kotlin.runCatching { engine.eval(script) }
-        .getOrElse { throw LoadException("Cannot load script", it) }
+fun reloadScripts() {
+    loadedScripts.forEach { it ->
+        it.commands.forEach {
+            it.state = false
+            it.remove()
+        }
+    }
+    loadedScripts.clear()
+    loadScripts()
 }
